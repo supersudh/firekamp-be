@@ -108,7 +108,7 @@ export class UsersController {
       if (!req.user) {
         throw new UnauthorizedException();
       }
-      const books = await this.bookService.listByUser(req.user.id);
+      const books = await this.bookService.listByUser(req.user.userId);
       return { items: books, totalItems: books.length };
     } catch (error) {
       throw error;

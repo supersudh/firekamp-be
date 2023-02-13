@@ -13,11 +13,12 @@ export class BooksService {
     const count = await this.bookRepository.count({
       where: {
         userId: currentUserId,
-        bookId: book.id,
+        bookId: book.bookId,
       },
     });
     if (count < 1) {
-      return await this.bookRepository.save(book);
+      console.log(20, { ...book, userId: currentUserId });
+      return await this.bookRepository.save({ ...book, userId: currentUserId });
     }
   }
 
