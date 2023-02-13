@@ -31,6 +31,9 @@
 ```bash
 $ npm install
 ```
+## Prerequisites
+Mysql installed.
+Change config settings in src/database/database.providers.ts and make sure database exists.
 
 ## Running the app
 
