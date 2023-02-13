@@ -19,7 +19,7 @@ export class UsersService {
       where: { email },
     });
     if (emailAlreadyExists) {
-      return new BadRequestException('Email already exists');
+      throw new BadRequestException('Email already exists');
     }
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltOrRounds);

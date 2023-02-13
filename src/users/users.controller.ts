@@ -29,12 +29,23 @@ export class UsersController {
 
   @Post('/register')
   async register(@Body() body: CreateUserDto) {
-    const registeredUser = await this.usersService.create(
-      body.fullName,
-      body.email,
-      body.password,
-    );
-    return registeredUser;
+    try {
+      await this.usersService.create(body.fullName, body.email, body.password);
+      const validatedUser = await this.usersService.validateUser(
+        body.email,
+        body.password,
+      );
+
+      if (!validatedUser) {
+        throw new UnauthorizedException();
+      }
+
+      const tokenObj = this.usersService.login(validatedUser);
+      return tokenObj;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   }
 
   // @UseGuards(AuthGuard('local'))
