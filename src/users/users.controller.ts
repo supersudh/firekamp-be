@@ -41,7 +41,7 @@ export class UsersController {
       }
 
       const tokenObj = this.usersService.login(validatedUser);
-      return tokenObj;
+      return { ...tokenObj, validatedUser };
     } catch (error) {
       console.log(error);
       throw error;
@@ -62,7 +62,7 @@ export class UsersController {
     }
 
     const tokenObj = this.usersService.login(validatedUser);
-    return tokenObj;
+    return { ...tokenObj, ...validatedUser };
   }
 
   @UseGuards(JwtAuthGuard)
@@ -96,6 +96,20 @@ export class UsersController {
       }
       const internalBookId = Number(body.id);
       await this.bookService.delete(internalBookId);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/favorite_books')
+  async favoriteBooks(@Request() req, @Body() body) {
+    try {
+      if (!req.user) {
+        throw new UnauthorizedException();
+      }
+      const books = await this.bookService.listByUser(req.user.id);
+      return { items: books, totalItems: books.length };
     } catch (error) {
       throw error;
     }

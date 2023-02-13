@@ -8,6 +8,7 @@ import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { BooksModule } from './books/books.module';
+import { jwtConstants } from './users/constants';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { BooksModule } from './books/books.module';
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: 'secretKey',
+      secret: jwtConstants.secret,
       signOptions: { expiresIn: '24h' },
     }),
     BooksModule,

@@ -1,5 +1,5 @@
 import { User } from 'src/users/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, BeforeInsert } from 'typeorm';
 
 @Entity()
 export class Book {
@@ -23,4 +23,9 @@ export class Book {
 
   @ManyToOne(() => User, (user) => user.books)
   user: User;
+  
+  @BeforeInsert()
+  async beforeInsert() {
+    console.log(this);
+  }
 }
