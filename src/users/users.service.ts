@@ -39,9 +39,6 @@ export class UsersService {
       where: {
         email,
       },
-      relations: {
-        books: true,
-      },
     });
 
     return foundUser;

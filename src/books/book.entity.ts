@@ -1,5 +1,4 @@
-import { User } from 'src/users/user.entity';
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Book {
@@ -21,11 +20,6 @@ export class Book {
   @Column()
   image: string;
 
-  @ManyToOne(() => User, (user) => user.books)
-  user: User;
-  
-  @BeforeInsert()
-  async beforeInsert() {
-    console.log(this);
-  }
+  @Column()
+  userId: number;
 }

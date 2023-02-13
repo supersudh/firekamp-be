@@ -80,7 +80,7 @@ export class UsersController {
         throw new UnauthorizedException();
       }
       body.user = Number(req.user.userId);
-      const fbook = await this.bookService.create(body);
+      const fbook = await this.bookService.create(body, req.user.userId);
       return fbook;
     } catch (error) {
       throw error;

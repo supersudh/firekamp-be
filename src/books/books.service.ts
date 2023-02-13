@@ -9,14 +9,22 @@ export class BooksService {
     private bookRepository: Repository<Book>,
   ) { }
 
-  async create(book) {
-    return await this.bookRepository.save(book);
+  async create(book, currentUserId) {
+    const count = await this.bookRepository.count({
+      where: {
+        userId: currentUserId,
+        bookId: book.id,
+      },
+    });
+    if (count < 1) {
+      return await this.bookRepository.save(book);
+    }
   }
 
   async listByUser(userId) {
     return await this.bookRepository.find({
       where: {
-        user: userId
+        userId
       }
     });
   }
